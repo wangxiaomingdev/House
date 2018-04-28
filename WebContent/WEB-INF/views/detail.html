@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>首页</title>
+<#include "include/resource.html"/>
+</head>
+<body>
+<#include "include/header.html"/>
+<div class="container" style="padding-left: 150px;padding-right: 150px">
+
+    <div class="text-center">
+        <h1>${house.title}</h1>
+        <span class="label label-primary">${house.money}元<#if house.type='出租' || house.type='求租'>/月</#if></span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="label label-success">${house.phone}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="label label-info">${house.style!}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="label label-warning">${house.floor!}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="label label-danger">${house.fitup!}-${house.car!'无'}车位</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="label label-default">${house.address}-${house.estate!}</span>
+        <span class="pull-right"><a
+        <#if sessionUser??>
+                href="javascript:if(confirm('确定要预约看房吗？')){alert('工作人员将会在2个工作日内联系您看房');location.href = '/admin/house/buy?houseid=${house.id}'}"
+        <#else >
+                href="javascript:alert('请先登录');location.href = '/login'"
+        </#if>
+                class="btn btn-info btn-sm">预约看房</a>
+        <a href="#" onclick="history.go(-1);"
+           class="btn btn-sm">返回</a></span>
+        <hr/>
+    </div>
+    <div style="margin-bottom: 20px">${house.content}</div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">发表评论</h3>
+        </div>
+        <form action="/admin/comment/send" method="post">
+            <input type="hidden" name="houseid" value="${house.id}">
+            <div class="panel-body">
+                <div class="form-group">
+                    <textarea required name="content" class="form-control"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">提交</button>
+            </div>
+        </form>
+    </div>
+
+    <hr/>
+
+<#list commentList as item>
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">${item.user}</h4>
+            <p>${item.content}</p>
+        </div>
+    </div>
+</#list>
+    <script>
+        var tip = "${tip!}";
+        if (tip.length > 0) {
+            alert(tip);
+        }
+    </script>
+</div>
+</body>
+</html>

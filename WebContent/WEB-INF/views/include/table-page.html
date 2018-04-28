@@ -1,0 +1,12 @@
+
+<div class="page pull-right">
+    <!-- 分页插件 -->
+    <ul class="pagination">
+    <#list pageInfo.navigatepageNums as num>
+        <li <#if pageInfo.pageNum == num>class="active"</#if>>
+            <a <#if pageInfo.pageNum != num>href="${url}&pageNum=${num}" </#if>>${num}</a>
+        </li>
+    </#list>
+
+    </ul>
+</div>

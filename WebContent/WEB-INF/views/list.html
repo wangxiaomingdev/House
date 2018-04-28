@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>列表页</title>
+<#include "include/resource.html"/>
+</head>
+<body>
+<#include "include/header.html"/>
+<div class="container">
+
+    <div class="col-xs-12">
+        <div class="bs-example">
+            <div class="row">
+            <#list pageInfo.list as item>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3 class="text-center" style="height: 52px">${item.title}</h3>
+                            <p><span class="text-warning">价格:${item.money}</span><span class="text-success pull-right">联系:${item.phone}</span>
+                            </p>
+                            <p style="text-align: center"><a href="/detail/${item.id}.do" class="btn btn-primary"
+                                                             role="button">查看详情</a></p>
+                        </div>
+                    </div>
+                </div>
+            </#list>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-md-4"></div>
+                <div class="col-sm-4 col-md-4">
+                <#include "include/table-page.html"/>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <div class="page pull-right">
+                        <button class="btn" onclick="history.go(-1)">返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

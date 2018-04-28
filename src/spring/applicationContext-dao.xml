@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 设置MyBatis的XML配置文件路径，以及sqlSessionFactory -->
+	<!-- 配置SqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- 配置数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:mapper/**/*.xml</value>
+			</array>
+		</property>
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper"></bean>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- MapperScannerConfig它可以将接口转换为Spring容器中的Bean -->
+	<!-- 在Service中@Autowired的方法直接注入接口实例 -->
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="school.mapper" />
+		<property name="markerInterface" value="tk.mybatis.mapper.common.Mapper" />
+	</bean>
+</beans>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 使用此逆向工程生成Mapper，源码：（https://gitee.com/free/Mapper） -->
+<!-- namespace：命名空间，用于隔离sql -->
+<!-- 作用2：使用动态代理开发时需要，namespace必须和Mapper接口类路径一致 -->
+<mapper namespace="school.mapper.CommentMapper">
+	<!-- 使用sql元素进行定义，方便其他元素引用 ; -->
+	<!-- 使用<include>元素可以引入到各条sql中；例如<include refid="xxxxxx"> -->
+	<!-- 目的是将重复的sql语句提取出，达到sql复用目的 -->
+	<!-- 如果还想引用别的Mapper.xml中配置的sql片段，可使用refid=“对应Mapper.xml的namespace” -->
+	<!-- 同时sql元素支持变量传递 -->
+	<sql id="Example_Where_Clause"><!-- 声明sql片段 -->
+		<!-- 使用动态sql -->
+		<!-- if[经常与test一起用] -->
+		<!-- choose(when,othwewise)相当于switch和case -->
+		<!-- trim(where,set)[处理特定SQL拼装问题，比如去除多余的and或or] -->
+		<!-- forrach -->
+		<!-- where标签可以自动添加where，同时处理sql语句中的第一个and关键字 -->
+		<where>
+			<!-- -->
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<!-- test相当于判断真假 -->
+				<if test="criteria.valid">
+					<!-- prefix表示语句前缀； -->
+					<!-- prefixOverrides表示要删除的字符 -->
+					<!-- suffix表示语句的后缀 -->
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<!-- 遍历集合criteria.criteria -->
+						<!-- Criteria包含一个Cretiron的集合, -->
+						<!-- 每一个Criteria对象内包含的Cretiron之间是由AND连接的,是逻辑与的关系。 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<!-- id：statement的id或者叫做sql的id -->
+	<!-- 传递（输入）参数类型：parameterType -->
+	<!-- 返回（输出结果）参数类型：resultType（应该填写pojo的全路径） -->
+	<!-- 有时候还会用到 “#{}” ，它是输入参数的占位符，相当于jdbc的 “？” -->
+	<!-- 如果传入的参数是简单类型的，那么在${}之中就要写value -->
+	<!-- 在上面的动态sql中分别使用了#{}和${}符号，两个的区别 -->
+	<!-- #{}表示占位符 ${}表示拼接sql字符串（详细解释在MyBatis笔记中） -->
+	<!-- 如果返回多个结果，mybitis会自动把返回的结果放在list容器中， -->
+	<!-- 但此时resultType的配置和返回单结果的配置是相同的（即，无需改变） -->
+	<select id="selectReByExample" resultType="school.support.pojo.CommentPojo">
+		select c.*,u.name user from comment C LEFT JOIN user u on u.id =
+		c.userid
+		<if test="_parameter != null">
+			<!-- 使用<include>元素可以引入到各条sql中；例如<include refid="xxxxxx"> -->
+			<!-- 目的是将重复的sql语句提取出，达到sql复用目的 -->
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+</mapper>

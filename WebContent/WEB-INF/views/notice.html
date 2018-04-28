@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>首页</title>
+<#include "include/resource.html"/>
+    <style>
+        img{
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+<#include "include/header.html"/>
+<div class="container">
+    <div class="text-center">
+        <h1>${notice.title}</h1>
+        <span class="label label-success">${notice.addtime?string('yyyy-MM-dd')}</span>
+        <a style="text-decoration: none;" href="/index" class="pull-right icon-mail-reply icon-2x"></a>
+        <hr/>
+    </div>
+    <div style="margin-bottom: 20px">
+    ${notice.content}
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<#include "../include/resource-head.ftl"/>
+<body>
+<#include "../include/common-top.ftl"/>
+<div class="main-container" id="main-container">
+    <div class="main-container-inner">
+    <#include "../include/common-menu.ftl"/>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>房子</th>
+                                    <th>预约用户</th>
+                                    <th>联系方式</th>
+                                    <th>预约时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <#list pageInfo.list as item>
+                                <tr>
+                                    <td>${item.house!}</td>
+                                    <td>${item.user!}</td>
+                                    <td>${item.phone!}</td>
+                                    <td>${item.addtime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                    <td>
+                                        <#if !item.status?? || item.status?length == 0>
+                                            <a class="btn btn-xs btn-info" href="/admin/order/ok/${item.id}">
+                                                确定
+                                            </a>
+                                            <a class="btn btn-xs btn-info" href="/admin/order/cancel/${item.id}">
+                                                取消
+                                            </a>
+                                        </#if>
+                                    </td>
+
+                                </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+                        <#include "../include/table-page.ftl"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<#include "../include/resource-script.ftl"/>
+</html>
+

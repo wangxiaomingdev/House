@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<#include "../include/resource-head.ftl"/>
+<#assign active='siteAdd'/>
+<body>
+<#include "../include/common-top.ftl"/>
+<div class="main-container" id="main-container">
+    <div class="main-container-inner">
+    <#include "../include/common-menu.ftl"/>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="col-xs-12">
+                    <div class="row-fluid">
+                        <div class="widget-box">
+                            <div class="widget-header widget-header-blue widget-header-flat">
+                                <h4 class="lighter">
+                                    <i class="icon-plus"></i>公告详情
+                                </h4>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div class="step-content row-fluid position-relative">
+                                        <form class="form-horizontal" action="/admin/notice/update" method="post">
+                                            <input name="id" value="${notice.id}" type="hidden">
+
+                                            <div class="form-group has-info">
+                                                <label class="col-xs-12 col-sm-3 control-label no-padding-right">标题</label>
+                                                <div class="col-xs-12 col-sm-5">
+                                                    <input type="text" class="width-100" name="title"
+                                                           value="${notice.title!}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group has-info">
+                                                <div class="col-xs-1"></div>
+                                                <div class="col-xs-12 col-sm-10">
+                                                    <textarea id="editor" name="content"
+                                                              style="width: 100%;">${notice.content!}</textarea>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="row-fluid wizard-actions">
+                                                <button class="btn" type="reset">重置</button>
+                                                <button class="btn btn-success" type="submit">提交</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+    </div><!-- /.main-container -->
+</body>
+<#include "../include/resource-script.ftl"/>
+<script type="text/javascript">
+    KindEditor.ready(function (K) {
+        window.editor = K.create('#editor', {
+            uploadJson: '/uploadFile',
+            fileManagerJson: '',
+            allowFileManager: false
+        });
+    });
+</script>
+</html>
+

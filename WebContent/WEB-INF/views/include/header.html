@@ -1,0 +1,71 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/index">
+                <span>在线房屋中介系统</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/list?type=出租">出租信息</a></li>
+                <li><a href="/list?type=出售">出售信息</a></li>
+                <li><a href="/list?type=求租">求租信息</a></li>
+                <li><a href="/list?type=求售">求售信息</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" action="/list">
+                <input type="hidden" name="type" value="${type!}">
+                <div class="form-group">
+                    <input type="text" name="title" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+
+            <#if !sessionUser??>
+                <li><a href="/login">登录</a></li>
+                <li><a href="/register">注册</a></li>
+            </#if>
+
+            <#if sessionUser??>
+            <li><a><#if sessionUser.name! == 'admin'>管理员,您好！<#else>${sessionUser.name!}，您好！</#if></a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#mdf">修改密码</a></li>
+                    <li><a href="/admin/index">个人中心</a></li>
+                    <li><a href="/logout">退出</a></li>
+                </#if>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div id="mdf" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form  name="form" id="form" class="form-horizontal" method="post" action="/admin/modify">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">原密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" required class="form-control" name="pwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">新密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" required class="form-control" name="pwd2">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" form="form" class="btn btn-primary">修改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

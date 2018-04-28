@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="school.mapper.OrdersMapper">
+	<!-- 此时不需要给出parameterType的属性，MyBatis可以自动识别 -->
+	<select id="selectList" resultType="school.support.pojo.Order">
+		SELECT o.*,u.`name` user,u.phone,h.title house from orders o
+		LEFT JOIN house h ON h.id = o.houseid
+		LEFT JOIN `user` u ON u.id = o.userid
+		<if test="flag ==1">
+			WHERE h.type = '出租' OR h.type = '求租'
+		</if>
+		<if test="flag == 2">
+			WHERE h.type = '出售' OR h.type = '求售'
+		</if>
+		ORDER by o.addtime
+	</select>
+</mapper>
